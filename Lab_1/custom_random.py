@@ -15,7 +15,7 @@ class CustomRandom:
         return self.state / self.m
 
 
-def event_generator(probability: float, seed: int = None):
+def simple_event_generator(probability: float, seed: int = None):
     rand_gen = CustomRandom(seed)
     while True:
         yield rand_gen.random() <= probability
