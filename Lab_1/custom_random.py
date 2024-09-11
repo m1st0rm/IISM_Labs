@@ -18,12 +18,14 @@ class CustomRandom:
 
 def simple_event_generator(probability: float, seed: int = None):
     rand_gen = CustomRandom(seed)
+
     while True:
         yield probability >= rand_gen.random()
 
 
 def complex_event_generator(probability: List[float], seed: int = None) -> List[bool]:
     rand_gen = CustomRandom(seed)
+
     event_list = []
     for prob in probability:
         event_list.append(prob >= rand_gen.random())
@@ -53,11 +55,34 @@ def complex_event_of_dependent_events_generator(
     while True:
         rand_value = rand_gen.random()
 
-        if rand_value <= p_ab:
+        if p_ab >= rand_value:
             yield 0
-        elif rand_value <= p_ab + p_a_not_b:
+        elif p_ab + p_a_not_b >= rand_value:
             yield 1
-        elif rand_value <= p_ab + p_a_not_b + p_not_a_b:
+        elif p_ab + p_a_not_b + p_not_a_b >= rand_value:
             yield 2
         else:
             yield 3
+
+
+def full_group_event_generator(probabilities: List[float], seed: int = None):
+    rand_gen = CustomRandom(seed)
+
+    if not (0.9999 < sum(probabilities) < 1.0001):
+        raise ValueError(
+            "The sum of the probabilities should be approximately equal to 1"
+        )
+
+    cummulative_probabilities = []
+    cummulative_sum = 0
+
+    for prob in probabilities:
+        cummulative_sum += prob
+        cummulative_probabilities.append(cummulative_sum)
+
+    while True:
+        rand_value = rand_gen.random()
+        for index, cum_prob in enumerate(cummulative_probabilities):
+            if cum_prob >= rand_value:
+                yield index
+                break
