@@ -26,10 +26,11 @@ def simple_event_generator(probability: float, seed: int = None):
 def complex_event_generator(probability: List[float], seed: int = None) -> List[bool]:
     rand_gen = CustomRandom(seed)
 
-    event_list = []
-    for prob in probability:
-        event_list.append(prob >= rand_gen.random())
-    return event_list
+    while True:
+        event_list = []
+        for prob in probability:
+            event_list.append(prob >= rand_gen.random())
+        yield event_list
 
 
 def complex_event_of_dependent_events_generator(
