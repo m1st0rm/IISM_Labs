@@ -56,13 +56,13 @@ def complex_event_of_dependent_events_generator(
         rand_value = rand_gen.random()
 
         if p_ab >= rand_value:
-            yield 0
+            yield 0, p_ab
         elif p_ab + p_a_not_b >= rand_value:
-            yield 1
+            yield 1, p_a_not_b
         elif p_ab + p_a_not_b + p_not_a_b >= rand_value:
-            yield 2
+            yield 2, p_not_a_b
         else:
-            yield 3
+            yield 3, p_not_a_not_b
 
 
 def full_group_event_generator(probabilities: List[float], seed: int = None):
