@@ -19,8 +19,7 @@ class FortuneWheel:
 
         games_sum = sum(self.games.values())
 
-        games_with_probabilities = {game: score / games_sum for game, score in self.games.items()}
-
+        games_with_probabilities = {
+            game: score / games_sum for game, score in self.games.items()
+        }
         return games_with_probabilities
-
-
