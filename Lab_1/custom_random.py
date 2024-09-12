@@ -23,7 +23,7 @@ def simple_event_generator(probability: float, seed: int = None):
         yield probability >= rand_gen.random()
 
 
-def complex_event_generator(probability: List[float], seed: int = None) -> List[bool]:
+def complex_event_generator(probability: List[float], seed: int = None):
     rand_gen = CustomRandom(seed)
 
     while True:
